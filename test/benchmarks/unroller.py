@@ -102,7 +102,7 @@ class UnrollLargeFile:
         pass_ = Unroller(['cx', 'u1', 'u2', 'u3'])
         unrolled_dag = pass_.run(self.prime6)
 
-    def time_prime6(self):
+    def time_prime8(self):
         pass_ = Unroller(['cx', 'u1', 'u2', 'u3'])
-        unrolled_dag = pass_.run(self.prime6)
+        unrolled_dag = pass_.run(self.prime8)
 

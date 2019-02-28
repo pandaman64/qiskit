@@ -14,8 +14,7 @@ echo "Machine: "$MACHINE
 # the next cron job - the timeout value is in seconds and can be adjusted.
 
 # On Linux - using taskset -c 0 ensures that the same core is always used when running the benchmarks.
-asv setup
-taskset -c 0 asv run HEAD~1..HEAD || true
+taskset -c 0 asv run HEAD~1..HEAD --skip-existing || true
 # timeout 7200 taskset -c 0 asv run ALL --skip-existing-commits || true
 
 # On MacOSX:
@@ -25,7 +24,7 @@ taskset -c 0 asv run HEAD~1..HEAD || true
 git add results/$MACHINE
 git commit -m "New results from $MACHINE"
 
-git push pandaman add-asv-benchmarks
+git push origin add-asv-benchmarks
 asv gh-pages --no-push
-git push -f pandaman gh-pages
+git push -f origin gh-pages
 

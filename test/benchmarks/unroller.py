@@ -77,24 +77,32 @@ class UnrollerBench:
         unrolled_dag = pass_.run(self.chain_conditional)
 
 class UnrollLargeFile:
-    def setup(self):
+    def load_file(self, filename):
         version_parts = qiskit.__version__.split('.')
-        self.qasm_path = os.path.abspath(
+        qasm_path = os.path.abspath(
             os.path.join(os.path.dirname(__file__), 'qasm'))
-        large_qasm_path = os.path.join(self.qasm_path, 'prime6_pkrm.qasm')
+        large_qasm_path = os.path.join(qasm_path, filename)
 
         if hasattr(qiskit, 'load_qasm_file'):
-            self.large_qasm = qiskit.load_qasm_file(large_qasm_path)
+            large_qasm = qiskit.load_qasm_file(large_qasm_path)
         elif version_parts[0] == '0' and int(version_parts[1]) < 5:
-            self.large_qasm = qiskit.QuantumProgram()
-            self.large_qasm.load_qasm_file(large_qasm_path,
+            large_qasm = qiskit.QuantumProgram()
+            large_qasm.load_qasm_file(large_qasm_path,
                                            name='large_qasm')
         else:
-            self.large_qasm = qiskit.QuantumCircuit.from_qasm_file(
+            large_qasm = qiskit.QuantumCircuit.from_qasm_file(
                 large_qasm_path)
-        self.large_qasm_dag = circuit_to_dag(self.large_qasm)
+        return circuit_to_dag(large_qasm)
 
-    def time_large_qasm(self):
-        pass_ = Unroller(['u1', 'u2', 'u3'])
-        unrolled_dag = pass_.run(self.large_qasm_dag)
+    def setup(self):
+        self.prime6 = self.load_file('prime6_pkrm.qasm')
+        self.prime8 = self.load_file('prime8_pkrm.qasm')
+
+    def time_prime6(self):
+        pass_ = Unroller(['cx', 'u1', 'u2', 'u3'])
+        unrolled_dag = pass_.run(self.prime6)
+
+    def time_prime6(self):
+        pass_ = Unroller(['cx', 'u1', 'u2', 'u3'])
+        unrolled_dag = pass_.run(self.prime6)
 

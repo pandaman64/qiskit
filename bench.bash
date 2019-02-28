@@ -25,7 +25,7 @@ taskset -c 0 asv run HEAD~1..HEAD || true
 git add results/$MACHINE
 git commit -m "New results from $MACHINE"
 
-git push pandaman add-asv-benchmarks
+git push origin add-asv-benchmarks
 asv gh-pages --no-push
-git push -f pandaman gh-pages
+git push -f origin gh-pages
 

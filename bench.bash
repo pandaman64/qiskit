@@ -14,7 +14,7 @@ echo "Machine: "$MACHINE
 # the next cron job - the timeout value is in seconds and can be adjusted.
 
 # On Linux - using taskset -c 0 ensures that the same core is always used when running the benchmarks.
-taskset -c 0 asv run 422a6a74.. --skip-existing-failed -b unroller.* || true
+taskset -c 0 asv run 422a6a74.. --skip-existing -b unroller.* || true
 # timeout 7200 taskset -c 0 asv run ALL --skip-existing-commits || true
 
 # On MacOSX:
